@@ -14,6 +14,15 @@ class MyCustomTool(ToolService):
         super().__init__(agent_tool)
     
     async def execute(self, request: ToolRequest) -> ToolResponse:
-        # Implement your tool logic here
-        result = f"Processed: {request.input}"
-        return ToolResponse(output=result)
+        # ✅ Extract input correctly
+        user_input = ""
+        if request.input:
+            user_input = request.input.get("input", "")
+
+        # ✅ Process
+        result = f"Processed: {user_input}"
+
+        # ✅ IMPORTANT: output MUST be STRING
+        return ToolResponse(
+            output=result
+        )
